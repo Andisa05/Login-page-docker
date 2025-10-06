@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login & Signup</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: #006eff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .toggle {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .toggle a {
+      color: #007BFF;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+    .status {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Login form -->
+  <div id="loginForm">
+    <h2>Login</h2>
+    <input type="text" id="loginUser" placeholder="Username">
+    <input type="password" id="loginPass" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <div class="toggle">
+      Don’t have an account? <a onclick="showSignup()">Sign up</a>
+    </div>
+    <div id="loginStatus" class="status"></div>
+  </div>
+
+  <!--Signup form-->
+  <div id="signupForm" class="hidden">
+    <h2>Sign up</h2>
+    <input type="text" id="signupUser" placeholder="Username">
+    <input type="email" id="signupEmail" placeholder="Email">
+    <input type="password" id="signupPass" placeholder="Password">
+    <input type="password" id="signupConfirm" placeholder="Confirm Password">
+    <button onclick="signup()">Create Account</button>
+    <div class="toggle">
+      Already have an account? <a onclick="showLogin()">Login</a>
+    </div>
+    <div id="signupStatus" class="status"></div>
+  </div>
+</div>
+
+<script>
+  // Database  stores in memory
+  const users = {
+    admin: { password: "1234", email: "admin@example.com" }
+  };
+
+  // Signup form
+  function showSignup() {
+    document.getElementById("loginForm").classList.add("hidden");
+    document.getElementById("signupForm").classList.remove("hidden");
+  }
+
+  // Login form
+  function showLogin() {
+    document.getElementById("signupForm").classList.add("hidden");
+    document.getElementById("loginForm").classList.remove("hidden");
+  }
+
+  // Handle login
+  function login() {
+    const user = document.getElementById("loginUser").value.trim();
+    const pass = document.getElementById("loginPass").value;
+
+    if (users[user] && users[user].password === pass) {
+      document.getElementById("loginStatus").style.color = "green";
+      document.getElementById("loginStatus").innerText = "✅ Login successful! Welcome, " + user;
+    } else {
+      document.getElementById("loginStatus").style.color = "red";
+      document.getElementById("loginStatus").innerText = "❌ Invalid username or password.";
+    }
+  }
+
+  // Handle signup
+  function signup() {
+    const user = document.getElementById("signupUser").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const pass = document.getElementById("signupPass").value;
+    const confirm = document.getElementById("signupConfirm").value;
+
+    if (!user || !pass || !confirm) {
+      setSignupStatus("Please fill all required fields.", "red");
+      return;
+    }
+    if (pass !== confirm) {
+      setSignupStatus("Passwords do not match.", "red");
+      return;
+    }
+    if (users[user]) {
+      setSignupStatus("Username already exists.", "red");
+      return;
+    }
+
+    // Save user
+    users[user] = { password: pass, email: email };
+    setSignupStatus("✅ Account created! You can now login.", "green");
+
+    // Switch to login after signup
+    setTimeout(showLogin, 1500);
+  }
+
+  function setSignupStatus(msg, color) {
+    const status = document.getElementById("signupStatus");
+    status.style.color = color;
+    status.innerText = msg;
+  }
+</script>
+
+</body>
+</html>
