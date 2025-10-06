@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -58,6 +58,7 @@
       font-weight: bold;
     }
   </style>
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
@@ -69,7 +70,7 @@
     <input type="password" id="loginPass" placeholder="Password">
     <button onclick="login()">Login</button>
     <div class="toggle">
-      Don’t have an account? <a onclick="showSignup()">Sign up</a>
+      Donâ€™t have an account? <a onclick="showSignup()">Sign up</a>
     </div>
     <div id="loginStatus" class="status"></div>
   </div>
@@ -114,10 +115,10 @@
 
     if (users[user] && users[user].password === pass) {
       document.getElementById("loginStatus").style.color = "green";
-      document.getElementById("loginStatus").innerText = "✅ Login successful! Welcome, " + user;
+      document.getElementById("loginStatus").innerText = "âœ… Login successful! Welcome, " + user;
     } else {
       document.getElementById("loginStatus").style.color = "red";
-      document.getElementById("loginStatus").innerText = "❌ Invalid username or password.";
+      document.getElementById("loginStatus").innerText = "âŒ Invalid username or password.";
     }
   }
 
@@ -143,7 +144,7 @@
 
     // Save user
     users[user] = { password: pass, email: email };
-    setSignupStatus("✅ Account created! You can now login.", "green");
+    setSignupStatus("âœ… Account created! You can now login.", "green");
 
     // Switch to login after signup
     setTimeout(showLogin, 1500);
@@ -158,3 +159,4 @@
 
 </body>
 </html>
+
