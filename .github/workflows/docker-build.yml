@@ -39,6 +39,6 @@ jobs:
             andisa05/login-page:latest
             andisa05/login-page:${{ github.sha }}
 
-      # Optional: Verify image
-      - name: Inspect image
-        run: docker image inspect andisa05/login-page:latest
+      # # Optional: Verify image
+      # - name: Inspect image
+      #   run: docker image inspect andisa05/login-page:latest
